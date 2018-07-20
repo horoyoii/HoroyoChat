@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">horoyoChat</string>
+    <string name="auth_failed">유효하지 않은 이메일입니다.</string>
+</resources>

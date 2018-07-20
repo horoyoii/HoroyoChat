@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "555892370651",
+    "firebase_url": "https://horoyochat.firebaseio.com",
+    "project_id": "horoyochat",
+    "storage_bucket": "horoyochat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:555892370651:android:9d389aa2e78dae6b",
+        "android_client_info": {
+          "package_name": "org.horoyoii.horoyochat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "555892370651-8a8bjqgoegj19rm007lucggm6u06d7ma.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.horoyoii.horoyochat",
+            "certificate_hash": "21d406b5468df0576d96a631558dd719a7bfbd1a"
+          }
+        },
+        {
+          "client_id": "555892370651-ci3hoh88vi9ii3tranvsdftsae347u70.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0p0kK2dUonkMRfZIPxB1fZ9J_VolyoSg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "555892370651-ci3hoh88vi9ii3tranvsdftsae347u70.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
