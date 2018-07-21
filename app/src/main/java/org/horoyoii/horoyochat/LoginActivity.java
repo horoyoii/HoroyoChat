@@ -1,6 +1,5 @@
 package org.horoyoii.horoyochat;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,11 +10,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.flags.impl.DataUtils;
-import com.google.android.gms.signin.SignIn;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -31,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     public static final int LOGIN_TO_REGI = 1002;
     Button btnLogin, btnRegister;
     EditText etEmail, etPassWord;
-
+    ProgressBar progressBar;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -45,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         etEmail = (EditText) findViewById(R.id.login_editText_id);
         etPassWord = (EditText) findViewById(R.id.login_editText_pw);
         btnRegister = (Button)findViewById(R.id.login_button_register);
-
+        progressBar = (ProgressBar)findViewById(R.id.login_progressBar);
 
 
 
@@ -122,12 +119,17 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "이메일을 입력해주세요.",0).show();
             return;
         }
+
+        showProgressDialog();
+
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
 
+                        hideProgressDialog();
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
@@ -141,7 +143,7 @@ public class LoginActivity extends AppCompatActivity {
                         // 로그인 성공 지점
                         //==========================================================================
                         else{
-                            Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), ChatListActivity.class);
                             startActivity(intent);
                         }
 
@@ -150,6 +152,13 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+
+    public  void showProgressDialog(){
+        progressBar.setVisibility(View.VISIBLE);
+    }
+    public void hideProgressDialog(){
+        progressBar.setVisibility(View.GONE);
+    }
 
 
 }

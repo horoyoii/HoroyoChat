@@ -1,14 +1,18 @@
 package org.horoyoii.horoyochat;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,7 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     Button btn_request, btn_cancel;
     EditText etMail, etPassWord, etPassWord2;
-
+    TextView strong1, strong2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,8 @@ public class RegisterActivity extends AppCompatActivity {
         etPassWord = (EditText)findViewById(R.id.regi_editText_pw);
         etPassWord2 = (EditText)findViewById(R.id.regi_editText_pw2);
         mAuth = FirebaseAuth.getInstance();
+        strong1 = (TextView)findViewById(R.id.regi_strong1);
+        strong2 = (TextView)findViewById(R.id.regi_strong2);
 
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +59,66 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
 
+
+        etPassWord.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.length() == 0){
+                    strong1.setText("...");
+                }
+                else if(charSequence.length() <= 4){
+                    strong1.setText("약함");
+                    strong1.setTextColor(Color.parseColor("#00ff00"));
+                }else if(charSequence.length() <=6){
+                    strong1.setText("중간");
+                    strong1.setTextColor(Color.parseColor("#ff1493"));
+
+                }else if(charSequence.length() >6){
+                    strong1.setText("강함");
+                    strong1.setTextColor(Color.parseColor("#800000"));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        etPassWord2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.length() == 0){
+                    strong2.setText("...");
+                }
+                else if(charSequence.length() <= 4){
+                    strong2.setText("약함");
+                    strong2.setTextColor(Color.parseColor("#00ff00"));
+                }else if(charSequence.length() <=6){
+                    strong2.setText("중간");
+                    strong2.setTextColor(Color.parseColor("#ff1493"));
+
+                }else if(charSequence.length() >6){
+                    strong2.setText("강함");
+                    strong2.setTextColor(Color.parseColor("#800000"));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
 
 
