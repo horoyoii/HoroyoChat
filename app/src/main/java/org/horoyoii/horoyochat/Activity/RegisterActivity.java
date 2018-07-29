@@ -1,4 +1,4 @@
-package org.horoyoii.horoyochat;
+package org.horoyoii.horoyochat.Activity;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -20,14 +20,23 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import org.horoyoii.horoyochat.R;
+import org.horoyoii.horoyochat.model.UserClass;
+
+/**
+ * Created by Horoyoii on 2018.07.29
+ */
 
 public class RegisterActivity extends AppCompatActivity {
-    public static final String TAG = "HoroyoChat";
+    public static final String TAG = "checkcheck";
 
     private FirebaseAuth mAuth;
 
     Button btn_request, btn_cancel;
-    EditText etMail, etPassWord, etPassWord2;
+    EditText etName, etMail, etPassWord, etPassWord2;
     TextView strong1, strong2;
 
     @Override
@@ -43,6 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         strong1 = (TextView)findViewById(R.id.regi_strong1);
         strong2 = (TextView)findViewById(R.id.regi_strong2);
+        etName = (EditText)findViewById(R.id.regi_editText_name);
 
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +137,7 @@ public class RegisterActivity extends AppCompatActivity {
     // onCreate
     //==============================================================================================
 
-    private void createAccount(String email, String password, String password2) {
+    private void createAccount (String email, String password, String password2) {
         Log.d(TAG, "createAccount:" + email);
         if (!validateForm(email, password, password2)) {
             return;
@@ -188,9 +198,20 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void updateUI(FirebaseUser user){
         if(user != null){
+            Log.d(TAG, "121");
             Intent intent =new Intent();
             intent.putExtra("email",user.getEmail());
             setResult(RESULT_OK, intent);
+
+            Log.d(TAG, "123");
+            // DatabaseReference myRef = mRootRef.child(formatDate);
+            DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference("user").child(user.getUid());
+            UserClass userClass = new UserClass(etName.getText().toString(), etMail.getText().toString(), String.valueOf(R.drawable.user1),null);
+            mRootRef.setValue(userClass);
+
+            Log.d(TAG, "125");
+
+
             finish();
         }
     }

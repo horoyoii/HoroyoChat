@@ -1,18 +1,35 @@
-package org.horoyoii.horoyochat;
+package org.horoyoii.horoyochat.model;
 
-public class ItemClass {
+/**
+ * Created by Horoyoii on 2018.07.29
+ */
+public class ChatRoomItemClass {
+    String email;
     String name;
     String time;
     int image;
     String content;
 
-    public ItemClass(String name, String time, int image, String content) {
+
+    public ChatRoomItemClass(){
+
+    }
+
+    public ChatRoomItemClass(String email, String name, String time, int image, String content) {
+        this.email = email;
         this.name = name;
         this.time = time;
         this.image = image;
         this.content = content;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getName() {
         return name;
@@ -46,3 +63,4 @@ public class ItemClass {
         this.content = content;
     }
 }
+

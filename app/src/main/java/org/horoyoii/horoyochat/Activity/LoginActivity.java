@@ -1,6 +1,7 @@
-package org.horoyoii.horoyochat;
+package org.horoyoii.horoyochat.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -19,12 +20,17 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import org.horoyoii.horoyochat.R;
+import org.horoyoii.horoyochat.util.AuthenticationUtil;
+import org.horoyoii.horoyochat.util.FirebaseUtil;
+import org.horoyoii.horoyochat.util.StorageUtil;
+
 /*
 * Created by Horoyoii 2018.07.20
  */
 
 public class LoginActivity extends AppCompatActivity {
-    public static final String TAG = "HoroyoChat";
+    public static final String TAG = "checkcheck";
     public static final int LOGIN_TO_REGI = 1002;
     Button btnLogin, btnRegister;
     EditText etEmail, etPassWord;
@@ -64,6 +70,12 @@ public class LoginActivity extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+
+                    SharedPreferences sharedPreferences = getSharedPreferences("User", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("email", user.getEmail());
+                    editor.apply();
+
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -143,7 +155,11 @@ public class LoginActivity extends AppCompatActivity {
                         // 로그인 성공 지점
                         //==========================================================================
                         else{
-                            Intent intent = new Intent(getApplicationContext(), ChatListActivity.class);
+                            FirebaseUtil.init();
+                            StorageUtil.init();
+                            AuthenticationUtil.init(mAuth.getCurrentUser());
+
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                         }
 
