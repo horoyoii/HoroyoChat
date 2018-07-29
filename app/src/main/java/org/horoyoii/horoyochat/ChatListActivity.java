@@ -11,6 +11,9 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+
+import org.horoyoii.horoyochat.model.ItemClass;
 
 public class ChatListActivity extends AppCompatActivity {
 
@@ -19,7 +22,8 @@ public class ChatListActivity extends AppCompatActivity {
     EditText editText_send;
     ItemAdapter adapter;
 
-
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
 
     @Override
@@ -29,8 +33,8 @@ public class ChatListActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.RecyclerView);
 
-        btn_send = (Button)findViewById(R.id.btn_send);
-        editText_send = (EditText)findViewById(R.id.editText_send);
+//        btn_send = (Button)findViewById(R.id.btn_send);
+//        editText_send = (EditText)findViewById(R.id.editText_send);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
@@ -67,24 +71,8 @@ public class ChatListActivity extends AppCompatActivity {
 
 
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            // User is signed in
-            String email = user.getEmail();
-            Toast.makeText(getApplicationContext(),email, 0).show();
 
 
-        } else {
-            // No user is signed in
-        }
-
-
-        btn_send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
 
 
 
