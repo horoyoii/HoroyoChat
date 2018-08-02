@@ -69,7 +69,7 @@ public class ChatRoomItemAdapter extends RecyclerView.Adapter<ChatRoomItemAdapte
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View itemView;
-        Log.d(TAG, "inflate"+items.get(viewType)+" "+String.valueOf(viewType));
+//        Log.d(TAG, "inflate"+items.get(viewType)+" "+String.valueOf(viewType));
 
 
         //=====================================================================

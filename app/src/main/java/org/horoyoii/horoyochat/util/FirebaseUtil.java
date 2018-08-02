@@ -8,18 +8,23 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 
 public class FirebaseUtil {
-    private static DatabaseReference mRootRef;
+    private static FirebaseDatabase mRootRef;
 
     public static void init(){
-         mRootRef= FirebaseDatabase.getInstance().getReference("user");
+         mRootRef= FirebaseDatabase.getInstance();
     }
 
     public static void Send(String comment){
-        mRootRef.setValue(comment);
+
     }
 
     public static DatabaseReference getUserRootRef(){
-        return mRootRef.child(AuthenticationUtil.getUserUid());
+        return mRootRef.getReference("user");
     }
+
+//    public static DatabaseReference getUserInfoRef(){
+//        return mRootRef.getReference("userInfo");
+//    }
+
 
 }

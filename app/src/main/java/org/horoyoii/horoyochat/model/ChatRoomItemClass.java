@@ -7,7 +7,7 @@ public class ChatRoomItemClass {
     String email;
     String name;
     String time;
-    int image;
+    String image;
     String content;
 
 
@@ -15,7 +15,7 @@ public class ChatRoomItemClass {
 
     }
 
-    public ChatRoomItemClass(String email, String name, String time, int image, String content) {
+    public ChatRoomItemClass(String email, String name, String time, String image, String content) {
         this.email = email;
         this.name = name;
         this.time = time;
@@ -47,11 +47,11 @@ public class ChatRoomItemClass {
         this.time = time;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

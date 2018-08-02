@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="20dp"
+    tools:context=".Activity.FindFriendActivity">
+
+    <TextView
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="친구검색"/>
+
+    <EditText
+        android:layout_marginBottom="6dp"
+        android:layout_marginTop="6dp"
+        android:id="@+id/find_friend_EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="친구 메일 입력"/>
+
+    <Button
+        android:id="@+id/find_friend_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="찾기" />
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:id="@+id/find_friend_result"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textColor="#000000"/>
+
+    <Button
+        android:id="@+id/find_friend_add_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="추가하기" />
+
+
+</LinearLayout>

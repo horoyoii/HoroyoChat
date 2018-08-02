@@ -1,16 +1,35 @@
 package org.horoyoii.horoyochat.main_Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import org.horoyoii.horoyochat.Activity.DetailProfileActivity;
 import org.horoyoii.horoyochat.Activity.MainActivity;
+import org.horoyoii.horoyochat.adapter.FragmentHomeItemAdapter;
 import org.horoyoii.horoyochat.R;
+import org.horoyoii.horoyochat.app.HoroyoChatApp;
+import org.horoyoii.horoyochat.model.FragmentHomeItemClass;
+import org.horoyoii.horoyochat.util.AuthenticationUtil;
+import org.horoyoii.horoyochat.util.FirebaseUtil;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /*
@@ -20,6 +39,11 @@ import org.horoyoii.horoyochat.R;
 public class Fragment_Home extends Fragment {
 
     MainActivity activity;
+    RecyclerView recyclerView;
+    TextView textView_myName;
+    CircleImageView circleImageView_myImage;
+    LinearLayout myProfile;
+    public static FragmentHomeItemAdapter adapter;
 
     @Override
     public void onAttach(Context context) {
@@ -33,17 +57,93 @@ public class Fragment_Home extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_home, container, false);
 
+        recyclerView= (RecyclerView)rootView.findViewById(R.id.home_recyclerView);
+        textView_myName = (TextView)rootView.findViewById(R.id.Fragment_home_MyName);
+        circleImageView_myImage = (CircleImageView)rootView.findViewById(R.id.Fragment_home_MyImage);
+        myProfile = (LinearLayout)rootView.findViewById(R.id.Fragment_home_myProfile);
+        adapter = new FragmentHomeItemAdapter();
 
-//        Button button = (Button)rootView.findViewById(R.id.btn_menu);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //activity.onFragmentChange(0);
-//            }
-//        });
+        LinearLayoutManager layoutManager = new LinearLayoutManager(activity.getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+
+        FirebaseUtil.getUserRootRef().child(AuthenticationUtil.getUserUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                textView_myName.setText(dataSnapshot.child("name").getValue().toString());
+                String value = dataSnapshot.child("profile_image").getValue().toString();
+                if(value.equals(String.valueOf(R.drawable.user1))){
+                    circleImageView_myImage.setImageResource(R.drawable.user1);
+                }else{
+                    Picasso.get().load(value).into(circleImageView_myImage);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        myProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HoroyoChatApp.getInstance(), DetailProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        loadList();
+
+        recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new FragmentHomeItemAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(FragmentHomeItemAdapter.ViewHolder holder, View view, int position) {
+                FragmentHomeItemClass item = adapter.getItem(position);
+                Intent intent = new Intent(HoroyoChatApp.getInstance(), DetailProfileActivity.class);
+                intent.putExtra("user",item);
+                startActivity(intent);
+            }
+        });
 
         return rootView;
     }
 
+
+    public void loadList(){
+        FirebaseUtil.getUserRootRef().child(AuthenticationUtil.getUserUid()).child("friend").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot src : dataSnapshot.getChildren()){
+                    //Log.d("check",src.getValue().toString());
+                    FirebaseUtil.getUserRootRef().child(src.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            FragmentHomeItemClass item = new FragmentHomeItemClass();
+                            item.setName(dataSnapshot.child("name").getValue().toString());
+                            item.setImage(dataSnapshot.child("profile_image").getValue().toString());
+                            item.setUid(dataSnapshot.getKey());
+
+                            Log.d("check",dataSnapshot.child("name").getValue().toString());
+                            Log.d("checkkk",item.getName());
+                            adapter.addItem(item);
+                            adapter.notifyItemInserted(adapter.getItemCount()-1);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 }

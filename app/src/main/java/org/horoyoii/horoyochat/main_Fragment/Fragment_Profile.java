@@ -30,6 +30,7 @@ import com.squareup.picasso.Picasso;
 
 import org.horoyoii.horoyochat.Activity.MainActivity;
 import org.horoyoii.horoyochat.R;
+import org.horoyoii.horoyochat.util.AuthenticationUtil;
 import org.horoyoii.horoyochat.util.FirebaseUtil;
 import org.horoyoii.horoyochat.util.StorageUtil;
 
@@ -66,7 +67,7 @@ public class Fragment_Profile extends Fragment {
 
         profile_image = (ImageView)rootView.findViewById(R.id.profile_image);
         name = (TextView)rootView.findViewById(R.id.textView_name);
-        FirebaseUtil.getUserRootRef().addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseUtil.getUserRootRef().child(AuthenticationUtil.getUserUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String Name = dataSnapshot.child("name").getValue().toString();
@@ -146,7 +147,7 @@ public class Fragment_Profile extends Fragment {
                     @Override
                     public void onSuccess(Uri uri) {
                         // uri를 realtime database에 추가한다.
-                        FirebaseUtil.getUserRootRef().child("profile_image").setValue(String.valueOf(uri));
+                        FirebaseUtil.getUserRootRef().child(AuthenticationUtil.getUserUid()).child("profile_image").setValue(String.valueOf(uri));
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
