@@ -1,5 +1,6 @@
 package org.horoyoii.horoyochat;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -19,15 +20,20 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import org.horoyoii.horoyochat.model.ChatRoomItemClass;
+import org.horoyoii.horoyochat.model.FragmentHomeItemClass;
+import org.horoyoii.horoyochat.util.AuthenticationUtil;
+import org.horoyoii.horoyochat.util.FirebaseUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 public class ChatRoomActivity extends AppCompatActivity {
-
+    FragmentHomeItemClass YourInfo;
     RecyclerView recyclerView;
     Button btn_send;
     EditText editText_send;
@@ -54,8 +60,6 @@ public class ChatRoomActivity extends AppCompatActivity {
         // Email은 식별자의 역할
         adapter = new ChatRoomItemAdapter(getApplicationContext(), user.getEmail());
 
-
-
         recyclerView.setAdapter(adapter);
 
 
@@ -63,21 +67,14 @@ public class ChatRoomActivity extends AppCompatActivity {
             @Override
             public void onItemClick(ChatRoomItemAdapter.ViewHolder holder, View view, int position) {
                 ChatRoomItemClass item = adapter.getItem(position);
-
-
                 Toast.makeText(getApplicationContext(), item.getName(), 0).show();
             }
         });
 
-        if (user != null) {
-            // User is signed in
-            String email = user.getEmail();
-            Toast.makeText(getApplicationContext(), email, 0).show();
 
 
-        } else {
-            // No user is signed in
-        }
+        Intent passedIntent = getIntent();
+        processIntent(passedIntent);
 
         // 메세지 전송 ==============================================================================
         btn_send.setOnClickListener(new View.OnClickListener() {
@@ -87,37 +84,37 @@ public class ChatRoomActivity extends AppCompatActivity {
                 Calendar c = Calendar.getInstance();
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
                 String formatDate = df.format(c.getTime());
-                /*
-                DatabaseReference myRef = mRootRef.child(formatDate);
+
+                DatabaseReference myRef = FirebaseUtil.getUserRootRef().child(AuthenticationUtil.getUserUid()).child("friend").child(YourInfo.getUid()).child(formatDate);
                 String email = user.getEmail();
-
-                ChatRoomItemClass comment = new ChatRoomItemClass(email,email, formatDate, R.drawable.user1, editText_send.getText().toString());
-
+                String name = AuthenticationUtil.getUserName();
+                //TODO : 사진넘기기...
+                ChatRoomItemClass comment = new ChatRoomItemClass(email,name, formatDate, String.valueOf(R.drawable.user1), editText_send.getText().toString());
                 myRef.setValue(comment);
-                   */
 
                 editText_send.setText("");
+
+                //DONE : 상대방 노드에도 추가한다.
+                DatabaseReference yourRef = FirebaseUtil.getUserRootRef().child(YourInfo.getUid()).child("friend").child(AuthenticationUtil.getUserUid()).child(formatDate);
+                yourRef.setValue(comment);
 
             }
         });
 
 
-        // 채팅 comment 읽어오기
-
-        mRootRef.addChildEventListener(new ChildEventListener() {
+        // 메세지 업데이트=====================================================================
+        FirebaseUtil.getUserRootRef().child(AuthenticationUtil.getUserUid()).child("friend").child(YourInfo.getUid()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
                 ChatRoomItemClass chat = dataSnapshot.getValue(ChatRoomItemClass.class);
                 Log.d("HoroyoChat", "읽어온 챗 & onChildAdded호출" +chat.getContent());
-
                 adapter.addItem(chat);
-                recyclerView.scrollToPosition(adapter.getItemCount()-1);
-                adapter.notifyItemInserted(adapter.getItemCount()-1);
-
-
-
-
+                try{
+                    recyclerView.scrollToPosition(adapter.getItemCount()-1);
+                    adapter.notifyItemInserted(adapter.getItemCount()-1);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -142,5 +139,14 @@ public class ChatRoomActivity extends AppCompatActivity {
         });
 
 
+
+    }
+
+    public void processIntent(Intent intent){
+        if(intent !=null){
+            YourInfo = (FragmentHomeItemClass)intent.getParcelableExtra("YourData");
+
+
+        }
     }
 }

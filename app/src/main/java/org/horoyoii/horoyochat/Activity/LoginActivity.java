@@ -19,6 +19,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import org.horoyoii.horoyochat.R;
 import org.horoyoii.horoyochat.util.AuthenticationUtil;
@@ -42,6 +45,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        android.support.v7.app.ActionBar ab = getSupportActionBar();
+        ab.hide();
         setContentView(R.layout.activity_login);
 
         btnLogin = (Button)findViewById(R.id.login_button);
@@ -157,6 +162,7 @@ public class LoginActivity extends AppCompatActivity {
                         else{
                             FirebaseUtil.init();
                             StorageUtil.init();
+
                             AuthenticationUtil.init(mAuth.getCurrentUser());
 
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);

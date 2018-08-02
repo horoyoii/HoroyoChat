@@ -25,6 +25,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import org.horoyoii.horoyochat.R;
 import org.horoyoii.horoyochat.model.UserClass;
+import org.horoyoii.horoyochat.util.FirebaseUtil;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /**
  * Created by Horoyoii on 2018.07.29
@@ -42,6 +46,8 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        android.support.v7.app.ActionBar ab = getSupportActionBar();
+        ab.hide();
         setContentView(R.layout.activity_register);
 
         btn_request = (Button)findViewById(R.id.regi_button_request);
@@ -159,17 +165,12 @@ public class RegisterActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                            Toast.makeText(RegisterActivity.this, "이미 존재하는 이메일입니다.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
-
-                        // [START_EXCLUDE]
-                        // hideProgressDialog();
-                        // [END_EXCLUDE]
                     }
                 });
-        // [END create_user_with_email]
     }
 
     public boolean validateForm(String email, String pw, String pw2){
@@ -205,8 +206,16 @@ public class RegisterActivity extends AppCompatActivity {
 
             Log.d(TAG, "123");
             // DatabaseReference myRef = mRootRef.child(formatDate);
+
             DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference("user").child(user.getUid());
             UserClass userClass = new UserClass(etName.getText().toString(), etMail.getText().toString(), String.valueOf(R.drawable.user1),null);
+//            ArrayList<String> list= new ArrayList<>();
+//            list.add("친구1");
+//            list.add("친구2");
+//            list.add("친구3");
+//            userClass.setFriend(list);
+            DatabaseReference mSubRef = FirebaseDatabase.getInstance().getReference("userInfo").child(user.getUid());
+            mSubRef.setValue(etMail.getText().toString());
             mRootRef.setValue(userClass);
 
             Log.d(TAG, "125");
