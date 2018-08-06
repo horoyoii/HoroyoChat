@@ -40,7 +40,7 @@ public class Fragment_Home extends Fragment {
 
     MainActivity activity;
     RecyclerView recyclerView;
-    TextView textView_myName;
+    TextView textView_myName, friend_list;
     CircleImageView circleImageView_myImage;
     LinearLayout myProfile;
     public static FragmentHomeItemAdapter adapter;
@@ -61,6 +61,8 @@ public class Fragment_Home extends Fragment {
         textView_myName = (TextView)rootView.findViewById(R.id.Fragment_home_MyName);
         circleImageView_myImage = (CircleImageView)rootView.findViewById(R.id.Fragment_home_MyImage);
         myProfile = (LinearLayout)rootView.findViewById(R.id.Fragment_home_myProfile);
+        friend_list = (TextView)rootView.findViewById(R.id.friend_list);
+
         adapter = new FragmentHomeItemAdapter();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity.getApplicationContext(), LinearLayoutManager.VERTICAL, false);
@@ -71,6 +73,7 @@ public class Fragment_Home extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 textView_myName.setText(dataSnapshot.child("name").getValue().toString());
                 String value = dataSnapshot.child("profile_image").getValue().toString();
+                //TODO : 느려...
                 if(value.equals(String.valueOf(R.drawable.user1))){
                     circleImageView_myImage.setImageResource(R.drawable.user1);
                 }else{
@@ -124,10 +127,11 @@ public class Fragment_Home extends Fragment {
                             item.setImage(dataSnapshot.child("profile_image").getValue().toString());
                             item.setUid(dataSnapshot.getKey());
 
-                            Log.d("check",dataSnapshot.child("name").getValue().toString());
-                            Log.d("checkkk",item.getName());
                             adapter.addItem(item);
                             adapter.notifyItemInserted(adapter.getItemCount()-1);
+
+                            String str ="친구 목록                                                                          "+String.valueOf(adapter.getItemCount())+" 명";
+                            friend_list.setText(str);
                         }
 
                         @Override

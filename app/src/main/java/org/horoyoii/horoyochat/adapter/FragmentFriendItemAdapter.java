@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import org.horoyoii.horoyochat.R;
 import org.horoyoii.horoyochat.app.HoroyoChatApp;
 import org.horoyoii.horoyochat.model.FragmentFriendItemClass;
@@ -111,9 +113,6 @@ public class FragmentFriendItemAdapter extends RecyclerView.Adapter<FragmentFrie
         public void setItem(FragmentFriendItemClass item){
             name.setText(item.getName());
             //TODO : 시간 줄여서 넣기
-            //time.setText(item.getTime());
-            // 2018-08-02-14:48:42
-            // 14:48
             try{
                 String TrimTime = item.getTime().substring(11,16);
                 time.setText(TrimTime);
@@ -123,7 +122,11 @@ public class FragmentFriendItemAdapter extends RecyclerView.Adapter<FragmentFrie
             }
             content.setText(item.getContent());
             //TODO : 이미지넣기
-            imageView.setImageResource(R.drawable.user1);
+            String value = item.getImage();
+            if(value.equals(String.valueOf(R.drawable.user1))){
+                imageView.setImageResource(R.drawable.user1);
+            }else
+                Picasso.get().load(value).into(imageView);
         }
 
         public void setOnItemClickListener(OnItemClickListener listener) {

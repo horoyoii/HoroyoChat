@@ -23,10 +23,12 @@
         android:hint="친구 메일 입력"/>
 
     <Button
+        android:background="@drawable/btn_main_style"
         android:id="@+id/find_friend_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
+        android:textColor="#ffffff"
         android:text="찾기" />
 
     <TextView
@@ -39,6 +41,8 @@
         android:textColor="#000000"/>
 
     <Button
+        android:background="@drawable/btn_main_style"
+        android:textColor="#ffffff"
         android:id="@+id/find_friend_add_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

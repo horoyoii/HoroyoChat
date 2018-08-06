@@ -1,6 +1,8 @@
 package org.horoyoii.horoyochat.main_Fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -15,8 +17,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,8 +32,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import org.horoyoii.horoyochat.Activity.LoginActivity;
 import org.horoyoii.horoyochat.Activity.MainActivity;
 import org.horoyoii.horoyochat.R;
+import org.horoyoii.horoyochat.app.HoroyoChatApp;
 import org.horoyoii.horoyochat.util.AuthenticationUtil;
 import org.horoyoii.horoyochat.util.FirebaseUtil;
 import org.horoyoii.horoyochat.util.StorageUtil;
@@ -52,6 +58,8 @@ public class Fragment_Profile extends Fragment {
     MainActivity activity;
     ImageView profile_image;
     TextView name;
+    Button logout;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -64,7 +72,7 @@ public class Fragment_Profile extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_profile, container, false);
 
-
+        logout = (Button)rootView.findViewById(R.id.btn_profile_logout);
         profile_image = (ImageView)rootView.findViewById(R.id.profile_image);
         name = (TextView)rootView.findViewById(R.id.textView_name);
         FirebaseUtil.getUserRootRef().child(AuthenticationUtil.getUserUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -94,6 +102,14 @@ public class Fragment_Profile extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, 1001);
+            }
+        });
+
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Show();
             }
         });
 
@@ -159,5 +175,23 @@ public class Fragment_Profile extends Fragment {
         });
     }
 
+    public void Show(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("로그아웃할꺼임?");
+        builder.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(activity, "로그아웃되었습니다.", Toast.LENGTH_SHORT).show();
+                activity.finish();
+            }
+        });
+        builder.show();
+    }
 
 }
