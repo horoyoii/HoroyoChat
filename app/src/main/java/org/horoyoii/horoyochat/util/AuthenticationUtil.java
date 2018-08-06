@@ -17,6 +17,7 @@ public class AuthenticationUtil {
     private static String email;
     private static FirebaseUser user;
     private static String userName;
+    private static String Profile_uri;
 
     public static void init(FirebaseUser users){
         user =users;
@@ -31,8 +32,13 @@ public class AuthenticationUtil {
     }
 
 
+    public static String getProfile_uri() {
+        return Profile_uri;
+    }
 
-
+    public static void setProfile_uri(String profile_uri) {
+        Profile_uri = profile_uri;
+    }
 
     private static void setUserName(){
         //String name;

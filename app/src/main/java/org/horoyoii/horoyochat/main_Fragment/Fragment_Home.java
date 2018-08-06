@@ -22,6 +22,7 @@ import com.squareup.picasso.Picasso;
 
 import org.horoyoii.horoyochat.Activity.DetailProfileActivity;
 import org.horoyoii.horoyochat.Activity.MainActivity;
+import org.horoyoii.horoyochat.ImageCacheDownloader;
 import org.horoyoii.horoyochat.adapter.FragmentHomeItemAdapter;
 import org.horoyoii.horoyochat.R;
 import org.horoyoii.horoyochat.app.HoroyoChatApp;
@@ -74,10 +75,15 @@ public class Fragment_Home extends Fragment {
                 textView_myName.setText(dataSnapshot.child("name").getValue().toString());
                 String value = dataSnapshot.child("profile_image").getValue().toString();
                 //TODO : 느려...
-                if(value.equals(String.valueOf(R.drawable.user1))){
+                if(value.equals("2131165334")){
                     circleImageView_myImage.setImageResource(R.drawable.user1);
+                    Log.d("aaaaa",value);
                 }else{
                     Picasso.get().load(value).into(circleImageView_myImage);
+                    AuthenticationUtil.setProfile_uri(value);
+//                    ImageCacheDownloader downloader = new ImageCacheDownloader(circleImageView_myImage, value);
+//                    downloader.execute();
+
                 }
             }
 
