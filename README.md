@@ -1,7 +1,6 @@
 # HoroyoChat
 Chatting Application _ firebase
 
-![image](https://user-images.githubusercontent.com/34915108/43019125-d4f03ec6-8c96-11e8-9eef-d3b8d5968922.png )
 
 ![image](https://user-images.githubusercontent.com/34915108/43727947-7655dc9a-99de-11e8-8e3e-b1573dfd291d.png)
 
