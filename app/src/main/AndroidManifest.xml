@@ -23,7 +23,7 @@
             android:name=".ChatListActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".Activity.RegisterActivity" />
-        <activity android:name=".ChatRoomActivity" />
+        <activity android:name=".Activity.ChatRoomActivity" />
         <activity
             android:name=".Activity.MainActivity"
             android:label="@string/title_activity_main" />

@@ -1,4 +1,4 @@
-package org.horoyoii.horoyochat;
+package org.horoyoii.horoyochat.Activity;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -20,9 +20,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
+import org.horoyoii.horoyochat.R;
+import org.horoyoii.horoyochat.adapter.ChatRoomItemAdapter;
 import org.horoyoii.horoyochat.model.ChatRoomItemClass;
 import org.horoyoii.horoyochat.model.FragmentHomeItemClass;
 import org.horoyoii.horoyochat.util.AuthenticationUtil;

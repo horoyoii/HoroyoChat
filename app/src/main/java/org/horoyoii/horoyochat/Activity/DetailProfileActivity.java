@@ -1,6 +1,5 @@
 package org.horoyoii.horoyochat.Activity;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -12,12 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestBuilder;
-import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.target.DrawableImageViewTarget;
 import com.squareup.picasso.Picasso;
 
-import org.horoyoii.horoyochat.ChatRoomActivity;
 import org.horoyoii.horoyochat.R;
 import org.horoyoii.horoyochat.app.HoroyoChatApp;
 import org.horoyoii.horoyochat.model.FragmentHomeItemClass;

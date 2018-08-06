@@ -90,4 +90,10 @@ public class MainActivity extends AppCompatActivity {
         //TODO : 프래래그먼트의 어뎁터에 최신화를 알려준다.
         //getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment_home).commit();
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("FLOW", "main activiry - onStop Called");
+    }
 }

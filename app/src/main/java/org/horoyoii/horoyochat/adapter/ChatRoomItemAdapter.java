@@ -1,15 +1,15 @@
-package org.horoyoii.horoyochat;
+package org.horoyoii.horoyochat.adapter;
 
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.horoyoii.horoyochat.R;
 import org.horoyoii.horoyochat.model.ChatRoomItemClass;
 
 import java.util.ArrayList;
@@ -57,11 +57,6 @@ public class ChatRoomItemAdapter extends RecyclerView.Adapter<ChatRoomItemAdapte
         return items.size();
     }
 
-
-    // 위의 getItemViewType을 오버라이드하여 position을 return해야 아래의 onCreateViewHolder에서의 position이 0,1,2,3 .. .으로 나오게 된다.
-
-
-
     //================================================================================
     // ViewHolder는 리사이클러뷰 아이템 하나당 한번씩 inflation 을 한다.
     @NonNull
@@ -69,8 +64,6 @@ public class ChatRoomItemAdapter extends RecyclerView.Adapter<ChatRoomItemAdapte
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View itemView;
-//        Log.d(TAG, "inflate"+items.get(viewType)+" "+String.valueOf(viewType));
-
 
         //=====================================================================
         // 내가 보낸 것인 경우 오른쪽 그렇지 않은 경우 왼쪽의 layout을 inflate한다.
@@ -81,8 +74,6 @@ public class ChatRoomItemAdapter extends RecyclerView.Adapter<ChatRoomItemAdapte
             itemView = inflater.inflate(R.layout.chat_room_talk_item, viewGroup, false);
         }
 
-
-        //itemView = inflater.inflate(R.layout.chat_room_talk_item, viewGroup, false);
         return new ViewHolder(itemView);
     }
 
@@ -122,7 +113,7 @@ public class ChatRoomItemAdapter extends RecyclerView.Adapter<ChatRoomItemAdapte
 
 
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView name;
         TextView time;
         CircleImageView imageView;

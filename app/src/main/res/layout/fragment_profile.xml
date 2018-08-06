@@ -48,4 +48,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView" />
+
+    <Button
+        android:id="@+id/btn_profile_logout"
+        android:textColor="#ffffff"
+        android:layout_below="@id/textView_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/btn_main_style"
+        android:text="로그아웃" />
+
 </RelativeLayout>

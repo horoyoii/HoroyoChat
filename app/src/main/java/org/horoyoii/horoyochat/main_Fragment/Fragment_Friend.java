@@ -3,7 +3,6 @@ package org.horoyoii.horoyochat.main_Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,18 +19,16 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import org.horoyoii.horoyochat.Activity.MainActivity;
-import org.horoyoii.horoyochat.ChatRoomActivity;
+import org.horoyoii.horoyochat.Activity.ChatRoomActivity;
 import org.horoyoii.horoyochat.adapter.FragmentFriendItemAdapter;
 import org.horoyoii.horoyochat.R;
 import org.horoyoii.horoyochat.app.HoroyoChatApp;
-import org.horoyoii.horoyochat.model.ChatRoomItemClass;
 import org.horoyoii.horoyochat.model.FragmentFriendItemClass;
 import org.horoyoii.horoyochat.model.FragmentHomeItemClass;
 import org.horoyoii.horoyochat.util.AuthenticationUtil;
 import org.horoyoii.horoyochat.util.FirebaseUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 /*

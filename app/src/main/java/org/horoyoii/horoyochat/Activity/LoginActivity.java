@@ -11,9 +11,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.DrawableImageViewTarget;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -38,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     Button btnLogin, btnRegister;
     EditText etEmail, etPassWord;
     ProgressBar progressBar;
+    ImageView imageView;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -54,6 +59,11 @@ public class LoginActivity extends AppCompatActivity {
         etPassWord = (EditText) findViewById(R.id.login_editText_pw);
         btnRegister = (Button)findViewById(R.id.login_button_register);
         progressBar = (ProgressBar)findViewById(R.id.login_progressBar);
+        imageView = (ImageView)findViewById(R.id.imageView2);
+
+        RequestOptions requestOptions = new RequestOptions();
+        DrawableImageViewTarget target = new DrawableImageViewTarget(imageView);
+        Glide.with(this).setDefaultRequestOptions(requestOptions.override(300,300)).load(R.raw.rain).into(target);
 
 
 

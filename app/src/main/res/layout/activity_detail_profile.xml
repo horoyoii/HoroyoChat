@@ -56,6 +56,10 @@
             android:textColor="#000000"
             android:textSize="20dp" />
         <Button
+            android:layout_margin="5dp"
+            android:layout_gravity="right"
+            android:textColor="#ffffff"
+            android:background="@drawable/btn_main_style"
             android:id="@+id/detail_chat_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
