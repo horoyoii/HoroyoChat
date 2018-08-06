@@ -208,12 +208,7 @@ public class RegisterActivity extends AppCompatActivity {
             // DatabaseReference myRef = mRootRef.child(formatDate);
 
             DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference("user").child(user.getUid());
-            UserClass userClass = new UserClass(etName.getText().toString(), etMail.getText().toString(), String.valueOf(R.drawable.user1),null);
-//            ArrayList<String> list= new ArrayList<>();
-//            list.add("친구1");
-//            list.add("친구2");
-//            list.add("친구3");
-//            userClass.setFriend(list);
+            UserClass userClass = new UserClass(etName.getText().toString(), etMail.getText().toString(), "https://firebasestorage.googleapis.com/v0/b/horoyochat.appspot.com/o/user1.png?alt=media&token=8ac00a76-b330-4101-8518-a8df4c2e2b4f",null);
             DatabaseReference mSubRef = FirebaseDatabase.getInstance().getReference("userInfo").child(user.getUid());
             mSubRef.setValue(etMail.getText().toString());
             mRootRef.setValue(userClass);

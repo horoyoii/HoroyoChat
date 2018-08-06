@@ -4,13 +4,16 @@ package org.horoyoii.horoyochat.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.horoyoii.horoyochat.ImageCacheDownloader;
 import org.horoyoii.horoyochat.R;
 import org.horoyoii.horoyochat.model.ChatRoomItemClass;
+import org.horoyoii.horoyochat.util.AuthenticationUtil;
 
 import java.util.ArrayList;
 
@@ -26,7 +29,7 @@ public class ChatRoomItemAdapter extends RecyclerView.Adapter<ChatRoomItemAdapte
     Context context;
 
     ArrayList<ChatRoomItemClass> items = new ArrayList<>();
-    String myEmail; // 나인지 남인지의 식별자
+    static String myEmail; // 나인지 남인지의 식별자
 
 
     OnItemClickListener listener;
@@ -76,11 +79,6 @@ public class ChatRoomItemAdapter extends RecyclerView.Adapter<ChatRoomItemAdapte
 
         return new ViewHolder(itemView);
     }
-
-
-
-
-
 
 
 
@@ -146,7 +144,15 @@ public class ChatRoomItemAdapter extends RecyclerView.Adapter<ChatRoomItemAdapte
             name.setText(item.getName());
             time.setText(item.getTime());
             content.setText(item.getContent());
-            imageView.setImageResource(R.drawable.user1);
+            if(item.getEmail().equals(myEmail)){
+                ImageCacheDownloader downloader = new ImageCacheDownloader(imageView, AuthenticationUtil.getProfile_uri());
+                downloader.execute();
+            }else{
+                Log.d("awefawef",item.getImage());
+                ImageCacheDownloader downloader = new ImageCacheDownloader(imageView, item.getImage());
+                downloader.execute();
+            }
+
         }
 
         public void setOnItemClickListener(OnItemClickListener listener) {

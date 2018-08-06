@@ -89,7 +89,7 @@ public class ChatRoomActivity extends AppCompatActivity {
                 String email = user.getEmail();
                 String name = AuthenticationUtil.getUserName();
                 //TODO : 사진넘기기...
-                ChatRoomItemClass comment = new ChatRoomItemClass(email,name, formatDate, String.valueOf(R.drawable.user1), editText_send.getText().toString());
+                ChatRoomItemClass comment = new ChatRoomItemClass(email,name, formatDate, AuthenticationUtil.getProfile_uri(), editText_send.getText().toString());
                 myRef.setValue(comment);
 
                 editText_send.setText("");

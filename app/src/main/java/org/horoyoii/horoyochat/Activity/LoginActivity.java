@@ -28,9 +28,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import org.horoyoii.horoyochat.R;
+import org.horoyoii.horoyochat.app.HoroyoChatApp;
 import org.horoyoii.horoyochat.util.AuthenticationUtil;
 import org.horoyoii.horoyochat.util.FirebaseUtil;
 import org.horoyoii.horoyochat.util.StorageUtil;
+
+import java.io.File;
 
 /*
 * Created by Horoyoii 2018.07.20
@@ -172,6 +175,12 @@ public class LoginActivity extends AppCompatActivity {
                         else{
                             FirebaseUtil.init();
                             StorageUtil.init();
+
+                            String savePath = HoroyoChatApp.getInstance().getCacheDir().toString()+"/save_profile_image";
+                            File dir = new File(savePath);
+                            if(!dir.exists()){
+                                dir.mkdirs();
+                            }
 
                             AuthenticationUtil.init(mAuth.getCurrentUser());
 

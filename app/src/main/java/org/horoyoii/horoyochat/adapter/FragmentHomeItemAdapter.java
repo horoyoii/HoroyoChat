@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.horoyoii.horoyochat.ImageCacheDownloader;
 import org.horoyoii.horoyochat.R;
 import org.horoyoii.horoyochat.app.HoroyoChatApp;
 import org.horoyoii.horoyochat.model.FragmentHomeItemClass;
@@ -78,7 +79,7 @@ public class FragmentHomeItemAdapter extends RecyclerView.Adapter<FragmentHomeIt
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView name;
         CircleImageView imageView;
-
+        ImageCacheDownloader downloader;
         OnItemClickListener listener;
 
         public ViewHolder(@NonNull View itemView) {
@@ -106,7 +107,10 @@ public class FragmentHomeItemAdapter extends RecyclerView.Adapter<FragmentHomeIt
             if(value.equals(String.valueOf(R.drawable.user1))){
                 imageView.setImageResource(R.drawable.user1);
             }else
-                Picasso.get().load(value).into(imageView);
+                //Picasso.get().load(value).into(imageView);
+                downloader = new ImageCacheDownloader(imageView, value);
+                downloader.execute();
+
         }
 
         public void setOnItemClickListener(OnItemClickListener listener) {
